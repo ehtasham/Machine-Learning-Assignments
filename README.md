@@ -1,1 +1,1 @@
-# Machine-Learning-Assignments
+Assignments of ML-Class Coursera
