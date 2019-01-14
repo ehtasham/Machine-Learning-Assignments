@@ -26,16 +26,15 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 %Normalizing first feature
-mu=mean(X(:,1))
-sigma=std(X(:,1))
-X(:,1)=(X(:,1)-mu)/sigma
+mu=mean(X(:,1));
+sigma=std(X(:,1));
+X_norm(:,1)=(X(:,1)-mu)/sigma;
 
 
 %normalizing second Feature
-mu=mean(X(:,2))
-sigma=std(X(:,2))
-X(:,2)=(X(:,2)-mu)/sigma
-
+mu=mean(X(:,2));
+sigma=std(X(:,2));
+X_norm(:,2)=(X(:,2)-mu)/sigma;
 
 
 
