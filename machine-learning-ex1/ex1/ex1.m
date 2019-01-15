@@ -35,7 +35,6 @@ warmUpExercise()
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
-
 %% ======================= Part 2: Plotting =======================
 fprintf('Plotting Data ...\n')
 data = load('ex1data1.txt');
@@ -48,6 +47,7 @@ plotData(X, y);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
 
 %% =================== Part 3: Cost and Gradient descent ===================
 
@@ -98,7 +98,6 @@ fprintf('For population = 70,000, we predict a profit of %f\n',...
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
 %% ============= Part 4: Visualizing J(theta_0, theta_1) =============
 fprintf('Visualizing J(theta_0, theta_1) ...\n')
 
