@@ -38,28 +38,6 @@ Theta2_grad = zeros(size(Theta2));
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
-
-a1 = [ones(m,1) X];
-
-z2 = a1 * Theta1';
-
-a2 = sigmoid(z2);
-
-a2 = [ones(m,1) a2];
-
-z3 = a2 * Theta2';
-
-h=sigmoid(z3);
-
-y_matrix=eye(num_labels)(y,:);
-
-J = (1/m) * sum(sum(-y_matrix.*log(h)-(1-y_matrix).*log(1-h)));
-
-reg_term=(lambda/(2*m)) * (sum(sum(  Theta1(:,2:end).^2)) ...
- +  sum(sum(Theta2(:,2:end).^2)));
- 
-J=J+reg_term;
- 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -76,36 +54,6 @@ J=J+reg_term;
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
-
-
-for t=1:m
- a1 = [1 ; X(t,:)'];
- 
- z2 = Theta1 * a1;
-  
-  a2 = [1 ; sigmoid(z2)];
-
-  z3 = Theta2 * a2;
-
-  a3=sigmoid(z3);
-  
-  y_matrix = eye(num_labels)(y(t),:)';
-  
-  d3=a3-y_matrix;
-  
-  d2=Theta2' * d3 .* [1;  sigmoidGradient(z2)];
-  
-  d2=d2(2:end);
-  
- Theta1_grad = Theta1_grad + d2 * a1';
- 
- Theta2_grad = Theta2_grad + d3 * a2';
-  
-endfor
-
-Theta1_grad =(1/m)* Theta1_grad;
-Theta2_grad =(1/m)* Theta2_grad;
-
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -116,20 +64,70 @@ Theta2_grad =(1/m)* Theta2_grad;
 
 
 
-Theta1(:,1) = 0 ;
-Theta2(:,1) = 0 ;
 
-Theta1_grad += (lambda/m) .* Theta1;
-Theta2_grad += (lambda/m) .* Theta2;
+%% ================ Part 3: Compute Cost (Feedforward) ================
 
+a1 = [ones(m,1) X];
 
+z2 = a1 * Theta1';
 
+a2 = [ones(m,1) sigmoid(z2)];
 
+z3 = a2 * Theta2';
 
+a3 = sigmoid(z3);
 
+h_thetaX=a3;
 
+y_matrix = eye(num_labels)(y,:);
 
+#cost without regularization
+J = (1/m) * sum(sum(-y_matrix .* log(h_thetaX) - (1-y_matrix).*log(1-h_thetaX) )) ;
 
+%% =============== Part 4: Implement Regularization ===============
+reg_term = (lambda/(2*m)) .* ( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))  );
+J = J + reg_term;
+
+%% =============== Part 7: Implement Backpropagation ===============
+
+for t = 1:m
+  
+  a1 = [1 ; X(t,:)'];
+  
+  z2 = Theta1 * a1;
+  
+  a2 = [1 ; sigmoid(z2)];
+  
+  z3 = Theta2 * a2;
+  
+  a3 = sigmoid(z3);
+  
+  y_new_matrix = eye(num_labels)(y(t),:)';
+  
+  d3 = a3 - y_new_matrix;
+  
+  d2 = Theta2' * d3 .* [1 ; sigmoidGradient(z2) ];
+  
+  d2 = d2(2:end);
+  
+  Theta1_grad = Theta1_grad + d2 * a1';
+  
+  Theta2_grad = Theta2_grad + d3 * a2';
+
+endfor
+
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
+
+%% =============== Part 8: Implement Regularization ===============
+
+Theta1(:,1)=0;
+
+Theta2(:,1)=0;
+
+Theta1_grad += (lambda/m) .*Theta1;
+
+Theta2_grad +=(lambda/m) .* Theta2;
 
 
 
