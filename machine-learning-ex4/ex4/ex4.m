@@ -43,8 +43,6 @@ displayData(X(sel, :));
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
-
 %% ================ Part 2: Loading Parameters ================
 % In this part of the exercise, we load some pre-initialized 
 % neural network parameters.
@@ -82,7 +80,7 @@ fprintf(['Cost at parameters (loaded from ex4weights): %f '...
 
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
-return;
+
 %% =============== Part 4: Implement Regularization ===============
 %  Once your cost function implementation is correct, you should now
 %  continue to implement the regularization with the cost.
@@ -183,7 +181,7 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 400);
 
 %  You should also try different values of lambda
 lambda = 1;

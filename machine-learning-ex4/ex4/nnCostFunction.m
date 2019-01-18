@@ -55,6 +55,11 @@ y_matrix=eye(num_labels)(y,:);
 
 J = (1/m) * sum(sum(-y_matrix.*log(h)-(1-y_matrix).*log(1-h)));
 
+reg_term=(lambda/(2*m)) * (sum(sum(  Theta1(:,2:end).^2)) ...
+ +  sum(sum(Theta2(:,2:end).^2)));
+ 
+J=J+reg_term;
+ 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -71,6 +76,36 @@ J = (1/m) * sum(sum(-y_matrix.*log(h)-(1-y_matrix).*log(1-h)));
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+
+for t=1:m
+ a1 = [1 ; X(t,:)'];
+ 
+ z2 = Theta1 * a1;
+  
+  a2 = [1 ; sigmoid(z2)];
+
+  z3 = Theta2 * a2;
+
+  a3=sigmoid(z3);
+  
+  y_matrix = eye(num_labels)(y(t),:)';
+  
+  d3=a3-y_matrix;
+  
+  d2=Theta2' * d3 .* [1;  sigmoidGradient(z2)];
+  
+  d2=d2(2:end);
+  
+ Theta1_grad = Theta1_grad + d2 * a1';
+ 
+ Theta2_grad = Theta2_grad + d3 * a2';
+  
+endfor
+
+Theta1_grad =(1/m)* Theta1_grad;
+Theta2_grad =(1/m)* Theta2_grad;
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -80,6 +115,12 @@ J = (1/m) * sum(sum(-y_matrix.*log(h)-(1-y_matrix).*log(1-h)));
 %
 
 
+
+Theta1(:,1) = 0 ;
+Theta2(:,1) = 0 ;
+
+Theta1_grad += (lambda/m) .* Theta1;
+Theta2_grad += (lambda/m) .* Theta2;
 
 
 
