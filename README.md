@@ -13,5 +13,3 @@ Assignment #5: Regularized Linear Regression and Bias v.s. Variance
 Assignment #6: Support Vector Machines
 
 Assignment #7: K-means Clustering and Principal Component Analysis
-
-Assignment #8: Anomaly Detection and Recommender Systems
