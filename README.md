@@ -1,4 +1,4 @@
-Assignments of ML-Class Coursera
+## Assignments of ML-Class Coursera
 
 Assignment #1: Univariate and Multivariate Linear Regression 
 
